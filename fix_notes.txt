@@ -1,0 +1,22 @@
+PATCH UPDATES TO APPLY:
+
+1. GOOGLE MAP - Replace iframe src with exact embed code provided
+2. ROBOT IMAGES - Replace old robots (robot1.png, robot2.png, robot3.webp) with new ones:
+   - Prezentorobot_1.png (standing strong)
+   - Prezentorobot_2.png (pointing)
+   - Prezentorobot_3.png (thumbs up)
+   - Prezentorobot_4.png (jumping/welcoming)
+   Place near: gallery, benefits, FAQ, form area. pointer-events: none
+3. HEADER LOGO - Add LOGOICEPALY.png next to ICE PLAY text, slightly larger
+4. COUNTER ROBOT OVERLAP - Move robot away from counter numbers
+5. FORM NOTICE TEXT - Replace with: "בבקשה למלא את כל השדות - אנו מבקשים למנוע ניצול לרעה של ההטבה על ידי מי שאינו תושב אילת"
+6. FORM CHECKBOX - Replace 3 checkboxes with 1 combined:
+   "אני מאשר/ת כי קראתי את תקנון המבצע ואת מדיניות הפרטיות, ואני מסכים/ה למסירת המידע שלי ושל ילדי ולשימוש בו לצורך ניהול המבצע, בדיקת זכאות ומימוש ההטבה, בהתאם להם."
+   With links: "תקנון המבצע" -> terms.html, "מדיניות הפרטיות" -> privacy.html (new tab)
+7. TERMS/PRIVACY LINKS - Also add to footer
+8. LEGAL PAGES - Already created terms.html and privacy.html
+9. FORM SUBMISSION - Connect to Google Apps Script endpoint:
+   URL: https://script.google.com/macros/s/AKfycbwWtvDX2wVt8F7dgsyTXFAyCNaECAc5Rc2EFn2oiJp46Wmmxy637nz0s6E3Nz196zXw/exec
+   POST JSON, fields: childName, childId, birthDate, parentName, address, phone, termsConsent, privacyConsent
+10. VIDEO SIDE IMAGE - Add icerobot.jpg next to video, same size, side by side on desktop, stacked on mobile
+11. PAGE BACKGROUND - Replace space-bg.webp with robobg.webp

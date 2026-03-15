@@ -84,14 +84,14 @@
             position: relative;
         }
 
-        /* ===== SPACE BACKGROUND ===== */
+        /* ===== SPACE BACKGROUND - PATCH #11: robobg.webp ===== */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background: url('images/space-bg.webp') center center / cover no-repeat;
+            background: url('images/robobg.webp') center center / cover no-repeat;
             z-index: -2;
-            opacity: 0.35;
+            opacity: 0.3;
         }
 
         body::after {
@@ -100,10 +100,10 @@
             inset: 0;
             background: linear-gradient(
                 180deg,
-                rgba(10, 10, 26, 0.5) 0%,
-                rgba(10, 10, 26, 0.7) 30%,
-                rgba(10, 10, 26, 0.6) 60%,
-                rgba(10, 10, 26, 0.8) 100%
+                rgba(10, 10, 26, 0.6) 0%,
+                rgba(10, 10, 26, 0.75) 30%,
+                rgba(10, 10, 26, 0.65) 60%,
+                rgba(10, 10, 26, 0.85) 100%
             );
             z-index: -1;
         }
@@ -188,7 +188,7 @@
             right: 0;
             left: 0;
             z-index: 1000;
-            padding: 16px 0;
+            padding: 12px 0;
             transition: all var(--transition);
             background: transparent;
         }
@@ -197,7 +197,7 @@
             background: rgba(10, 10, 26, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 10px 0;
+            padding: 8px 0;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
@@ -205,6 +205,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        /* PATCH #3: Logo in header */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .navbar.scrolled .logo-img {
+            height: 45px;
         }
 
         .logo {
@@ -383,7 +400,7 @@
             transform: translateX(-5px);
         }
 
-        /* ===== ROBOT CHARACTER ===== */
+        /* ===== ROBOT CHARACTER - PATCH #2 ===== */
         .robot-float {
             position: absolute;
             z-index: 2;
@@ -396,6 +413,17 @@
             left: 3%;
             width: clamp(100px, 14vw, 180px);
             animation: robot-bounce 3s ease-in-out infinite;
+        }
+
+        .robot-gallery {
+            position: absolute;
+            top: 20px;
+            left: -20px;
+            width: clamp(70px, 8vw, 110px);
+            z-index: 3;
+            filter: drop-shadow(0 4px 20px rgba(0, 212, 255, 0.3));
+            animation: robot-wave 2.5s ease-in-out infinite;
+            pointer-events: none;
         }
 
         .robot-form {
@@ -420,11 +448,11 @@
             pointer-events: none;
         }
 
-        .robot-counter {
+        .robot-promo {
             position: absolute;
-            bottom: -30px;
-            right: -40px;
-            width: clamp(70px, 8vw, 100px);
+            bottom: -20px;
+            left: -30px;
+            width: clamp(65px, 7vw, 95px);
             z-index: 3;
             filter: drop-shadow(0 4px 20px rgba(0, 255, 136, 0.3));
             animation: robot-bounce 2.8s ease-in-out infinite;
@@ -513,10 +541,18 @@
             object-fit: cover;
         }
 
-        /* ===== VIDEO SECTION ===== */
-        .video-wrapper {
-            max-width: 500px;
+        /* ===== VIDEO SECTION - PATCH #10: side-by-side with image ===== */
+        .video-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 900px;
             margin: 0 auto;
+            align-items: stretch;
+        }
+
+        .video-wrapper {
+            width: 100%;
         }
 
         .video-frame {
@@ -535,6 +571,21 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .video-side-image {
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 2px solid rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.1);
+        }
+
+        .video-side-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius);
         }
 
         /* ===== PROMO CARDS ===== */
@@ -598,7 +649,7 @@
             border-radius: var(--radius-lg);
             padding: 40px 60px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .counter-box::before {
@@ -606,6 +657,7 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at center, rgba(0, 255, 136, 0.05), transparent 70%);
+            border-radius: var(--radius-lg);
         }
 
         .counter-label {
@@ -771,10 +823,10 @@
             border-radius: var(--radius-sm);
             padding: 16px 20px;
             margin-bottom: 32px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--neon-yellow);
             line-height: 1.7;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .form-group {
@@ -838,7 +890,7 @@
             display: block;
         }
 
-        /* Checkbox group */
+        /* Checkbox group - PATCH #6: single combined checkbox */
         .checkbox-group {
             margin-top: 24px;
             display: flex;
@@ -863,6 +915,15 @@
             margin-top: 2px;
             accent-color: var(--neon-blue);
             cursor: pointer;
+        }
+
+        .checkbox-label a {
+            color: var(--neon-blue);
+            text-decoration: underline;
+        }
+
+        .checkbox-label a:hover {
+            color: var(--neon-purple);
         }
 
         .submit-btn {
@@ -1128,7 +1189,28 @@
         .footer-address {
             color: #b0b0c8;
             font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        /* PATCH #7: Footer links */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: underline;
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-purple);
         }
 
         .footer-copy {
@@ -1194,6 +1276,11 @@
                 height: 280px;
             }
 
+            /* PATCH #10: Video layout stacked on mobile */
+            .video-layout {
+                grid-template-columns: 1fr;
+            }
+
             .robot-hero {
                 width: 80px;
                 bottom: 2%;
@@ -1212,10 +1299,24 @@
                 right: -10px;
             }
 
-            .robot-counter {
-                width: 55px;
-                bottom: -20px;
-                right: -10px;
+            .robot-gallery {
+                width: 50px;
+                top: 10px;
+                left: -10px;
+            }
+
+            .robot-promo {
+                width: 50px;
+                bottom: -15px;
+                left: -10px;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            .navbar.scrolled .logo-img {
+                height: 35px;
             }
         }
 
@@ -1231,6 +1332,10 @@
 
             .robot-hero {
                 width: 65px;
+            }
+
+            .logo-img {
+                height: 35px;
             }
         }
 
@@ -1274,10 +1379,12 @@
     <!-- Skip to content - נגישות -->
     <a href="#registration-form" class="skip-link">דלג לטופס ההרשמה</a>
 
-    <!-- ===== NAVBAR ===== -->
+    <!-- ===== NAVBAR - PATCH #3: Logo added ===== -->
     <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
         <div class="container">
-            <div class="logo">ICE PLAY</div>
+            <div class="logo-wrapper">
+                <img src="images/LOGOICEPALY.png" alt="ICE PLAY לוגו" class="logo-img">
+            </div>
             <a href="#registration-form" class="nav-cta">להרשמה עכשיו</a>
         </div>
     </nav>
@@ -1304,8 +1411,8 @@
                 <span class="cta-arrow" aria-hidden="true">&#8592;</span>
             </a>
         </div>
-        <!-- רובוט ב-Hero -->
-        <img src="images/robot1.png" alt="" class="robot-float robot-hero" aria-hidden="true" loading="lazy">
+        <!-- PATCH #2: רובוט ב-Hero - Prezentorobot_4 (jumping/welcoming) -->
+        <img src="images/Prezentorobot_4.png" alt="" class="robot-float robot-hero" aria-hidden="true" loading="lazy">
     </header>
 
     <!-- ===== TRUST BAR ===== -->
@@ -1328,11 +1435,13 @@
         </div>
     </section>
 
-    <!-- ===== GALLERY ===== -->
-    <section class="section" id="gallery" aria-labelledby="gallery-title">
-        <div class="container">
+    <!-- ===== GALLERY - PATCH #2: Robot near gallery ===== -->
+    <section class="section" id="gallery" aria-labelledby="gallery-title" style="position:relative;">
+        <div class="container" style="position:relative;">
             <h2 class="section-title fade-in" id="gallery-title">הצצה למתחם</h2>
             <div class="glow-divider fade-in"></div>
+            <!-- רובוט ליד הגלריה -->
+            <img src="images/Prezentorobot_3.png" alt="" class="robot-gallery" aria-hidden="true" loading="lazy">
             <div class="gallery-grid fade-in">
                 <div class="gallery-item">
                     <img src="images/gallery1.webp" alt="משחק כדורסל אלקטרוני במתחם ICE PLAY" loading="lazy" width="600" height="450">
@@ -1350,30 +1459,37 @@
         </div>
     </section>
 
-    <!-- ===== VIDEO SECTION ===== -->
+    <!-- ===== VIDEO SECTION - PATCH #10: side image ===== -->
     <section class="section" id="video" aria-labelledby="video-title">
         <div class="container">
             <h2 class="section-title fade-in" id="video-title">צפו בסרטון</h2>
             <div class="glow-divider fade-in"></div>
-            <div class="video-wrapper fade-in">
-                <div class="video-frame">
-                    <iframe 
-                        src="https://www.youtube.com/embed/kuzlg8FBBE4" 
-                        title="סרטון ICE PLAY אילת"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        loading="lazy">
-                    </iframe>
+            <div class="video-layout fade-in">
+                <div class="video-wrapper">
+                    <div class="video-frame">
+                        <iframe 
+                            src="https://www.youtube.com/embed/kuzlg8FBBE4" 
+                            title="סרטון ICE PLAY אילת"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="video-side-image">
+                    <img src="images/icerobot.jpg" alt="ICE PLAY אילת - מתחם אטרקציות" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PROMO DETAILS ===== -->
-    <section class="section" id="promo" aria-labelledby="promo-title">
-        <div class="container">
+    <!-- ===== PROMO DETAILS - PATCH #2: Robot near promo ===== -->
+    <section class="section" id="promo" aria-labelledby="promo-title" style="position:relative;">
+        <div class="container" style="position:relative;">
             <h2 class="section-title fade-in" id="promo-title">על המבצע</h2>
             <div class="glow-divider fade-in"></div>
+            <!-- רובוט ליד הפרומו -->
+            <img src="images/Prezentorobot_1.png" alt="" class="robot-promo" aria-hidden="true" loading="lazy">
             <div class="promo-cards fade-in">
                 <div class="promo-card">
                     <span class="promo-icon" aria-hidden="true">&#127881;</span>
@@ -1394,21 +1510,19 @@
         </div>
     </section>
 
-    <!-- ===== REGISTRATION COUNTER ===== -->
-    <section class="counter-section fade-in" aria-labelledby="counter-title" style="position:relative;">
+    <!-- ===== REGISTRATION COUNTER - PATCH #4: Robot moved to side ===== -->
+    <section class="counter-section fade-in" aria-labelledby="counter-title">
         <div class="container">
             <div class="counter-box">
                 <span class="counter-label" id="counter-title">כבר נרשמו למבצע</span>
                 <span class="counter-number" id="registration-counter" aria-live="polite">150</span>
                 <span class="counter-plus">ילדים מאילת</span>
-                <!-- רובוט ליד הקאונטר -->
-                <img src="images/robot3.webp" alt="" class="robot-counter" aria-hidden="true" loading="lazy">
             </div>
         </div>
     </section>
 
     <!-- ===== COUNTDOWN TIMER ===== -->
-    <section class="countdown-section fade-in" id="countdown" aria-labelledby="countdown-title">
+    <section class="countdown-section fade-in" aria-labelledby="countdown-title">
         <div class="container">
             <h2 class="section-title" id="countdown-title">המבצע בתוקף עד 30.4.2026</h2>
             <div class="glow-divider"></div>
@@ -1436,60 +1550,60 @@
     <!-- ===== ELIGIBILITY / HOW TO RECEIVE ===== -->
     <section class="section" id="eligibility" aria-labelledby="eligibility-title">
         <div class="container">
-            <h2 class="section-title fade-in" id="eligibility-title">מי זכאי ואיך מקבלים?</h2>
+            <h2 class="section-title fade-in" id="eligibility-title">מי זכאי ואיך מממשים?</h2>
             <div class="glow-divider fade-in"></div>
             <div class="eligibility-list fade-in">
                 <div class="eligibility-item">
-                    <div class="eligibility-icon" aria-hidden="true">&#128118;</div>
-                    <div class="eligibility-text">
-                        <h4>ילדים תושבי אילת בלבד</h4>
-                        <p>המבצע מיועד אך ורק לילדים שהם תושבי העיר אילת, בגילאי 3 עד 16.</p>
-                    </div>
-                </div>
-                <div class="eligibility-item">
-                    <div class="eligibility-icon" aria-hidden="true">&#128179;</div>
-                    <div class="eligibility-text">
-                        <h4>יש להגיע עם תעודת זהות + ספח</h4>
-                        <p>ההורה חייב להגיע לקופה עם תעודת זהות ישראלית בצירוף הספח. לא מספיק תעודת תושב בלבד.</p>
-                    </div>
-                </div>
-                <div class="eligibility-item">
                     <div class="eligibility-icon" aria-hidden="true">&#128100;</div>
                     <div class="eligibility-text">
-                        <h4>שם הילד מופיע בספח</h4>
-                        <p>שם הילד/ה חייב להופיע בספח של תעודת הזהות של ההורה.</p>
+                        <h4>ילדים תושבי אילת בלבד</h4>
+                        <p>המבצע מיועד אך ורק לילדים בגילאי 3–16 שהם תושבי העיר אילת.</p>
+                    </div>
+                </div>
+                <div class="eligibility-item">
+                    <div class="eligibility-icon" aria-hidden="true">&#128196;</div>
+                    <div class="eligibility-text">
+                        <h4>תעודת זהות + ספח</h4>
+                        <p>יש להגיע עם תעודת זהות ישראלית בצירוף הספח. תעודת תושב בלבד אינה מספיקה.</p>
+                    </div>
+                </div>
+                <div class="eligibility-item">
+                    <div class="eligibility-icon" aria-hidden="true">&#128118;</div>
+                    <div class="eligibility-text">
+                        <h4>שם הילד/ה בספח</h4>
+                        <p>שם הילד/ה חייב להופיע בספח תעודת הזהות של ההורה.</p>
                     </div>
                 </div>
                 <div class="eligibility-item">
                     <div class="eligibility-icon" aria-hidden="true">&#127968;</div>
                     <div class="eligibility-text">
                         <h4>כתובת באילת בספח</h4>
-                        <p>הכתובת המופיעה בספח חייבת להיות כתובת באילת. זהו התנאי להוכחת תושבות.</p>
+                        <p>הכתובת המופיעה בספח חייבת להיות כתובת באילת.</p>
                     </div>
                 </div>
                 <div class="eligibility-item">
-                    <div class="eligibility-icon" aria-hidden="true">&#9989;</div>
+                    <div class="eligibility-icon" aria-hidden="true">&#127919;</div>
                     <div class="eligibility-text">
-                        <h4>הרשמה אחת לכל ילד</h4>
-                        <p>כל ילד זכאי להרשמה אחת בלבד. יש למלא טופס נפרד עבור כל ילד.</p>
+                        <h4>מימוש בקופת המתחם</h4>
+                        <p>לאחר ההרשמה, יש להגיע לקופת ICE PLAY באייסמול אילת, קומה תחתונה ליד רנואר, עם תעודת זהות וספח.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== REGISTRATION FORM ===== -->
-    <section class="section form-section" id="registration-form" aria-labelledby="form-title">
+    <!-- ===== FORM SECTION - PATCHES #2,5,6,9 ===== -->
+    <section class="section form-section" id="registration-form" aria-labelledby="form-title" style="position:relative;">
         <div class="container">
-            <h2 class="section-title fade-in" id="form-title">טופס הרשמה למבצע</h2>
-            <div class="glow-divider fade-in"></div>
-            
-            <div class="form-container fade-in" style="position:relative; overflow:visible;">
-                <!-- רובוט ליד הטופס -->
-                <img src="images/robot2.png" alt="" class="robot-form" aria-hidden="true" loading="lazy">
+            <h2 class="section-title fade-in" id="form-title">טופס הרשמה</h2>
+            <p class="section-subtitle fade-in">מלאו את הפרטים וקבלו כרטיס משחק עם 150 כוכבים במתנה</p>
+            <div class="form-container fade-in">
+                <!-- PATCH #2: רובוט ליד הטופס -->
+                <img src="images/Prezentorobot_2.png" alt="" class="robot-form" aria-hidden="true" loading="lazy">
 
+                <!-- PATCH #5: Updated form notice text -->
                 <div class="form-note" role="note">
-                    מתנצלים על כך שצריך למלא את כל הפרטים, אך זהו מבצע המיועד לתושבי אילת בלבד, ואנו מבקשים למנוע ניצול לרעה של ההטבה על ידי מי שאינו תושב אילת.
+                    בבקשה למלא את כל השדות - אנו מבקשים למנוע ניצול לרעה של ההטבה על ידי מי שאינו תושב אילת
                 </div>
 
                 <form id="registrationForm" novalidate>
@@ -1529,20 +1643,11 @@
                         <div class="field-error" id="phone-error" role="alert"></div>
                     </div>
 
-                    <!-- שדה אימייל הוסר -->
-
+                    <!-- PATCH #6: Single combined checkbox with links - PATCH #7: Links to terms/privacy pages -->
                     <div class="checkbox-group">
                         <label class="checkbox-label">
-                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required aria-required="true">
-                            <span>אני מאשר/ת את <a href="#legal-terms" tabindex="0">תנאי המבצע</a></span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="agreeResident" name="agreeResident" required aria-required="true">
-                            <span>אני מאשר/ת כי מדובר בילד תושב אילת בגיל 3–16</span>
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required aria-required="true">
-                            <span>אני מאשר/ת את <a href="#legal-privacy" tabindex="0">מדיניות הפרטיות</a></span>
+                            <input type="checkbox" id="agreeAll" name="agreeAll" required aria-required="true">
+                            <span>אני מאשר/ת כי קראתי את <a href="terms.html" target="_blank" rel="noopener noreferrer">תקנון המבצע</a> ואת <a href="privacy.html" target="_blank" rel="noopener noreferrer">מדיניות הפרטיות</a>, ואני מסכים/ה למסירת המידע שלי ושל ילדי ולשימוש בו לצורך ניהול המבצע, בדיקת זכאות ומימוש ההטבה, בהתאם להם.</span>
                         </label>
                     </div>
 
@@ -1554,25 +1659,25 @@
 
                 <!-- Form Messages -->
                 <div class="form-message" id="successMessage" role="alert">
-                    ההרשמה נקלטה בהצלחה! כדי לקבל את כרטיס המשחק, יש להגיע לקופה במתחם ICE PLAY באייסמול אילת, קומה תחתונה ליד רנואר, ולהציג תעודת זהות עם ספח.
+                    ההרשמה נקלטה בהצלחה! כדי לקבל את כרטיס המשחק יש להגיע לקופה במתחם ICE PLAY באייסמול אילת ולהציג תעודת זהות עם ספח.
                 </div>
                 <div class="form-message" id="duplicateMessage" role="alert">
                     נראה כי מספר תעודת הזהות הזה כבר רשום במבצע. כל ילד זכאי להרשמה אחת בלבד.
                 </div>
                 <div class="form-message" id="errorMessage" role="alert">
-                    אירעה שגיאה בשליחת הטופס. אנא נסו שוב מאוחר יותר או פנו אלינו ישירות.
+                    אירעה שגיאה בשליחת הטופס. אנא נסו שוב.
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== FAQ SECTION ===== -->
+    <!-- ===== FAQ SECTION - PATCH #2: Robot near FAQ ===== -->
     <section class="section" id="faq" aria-labelledby="faq-title" style="position:relative;">
         <div class="container" style="position:relative;">
             <h2 class="section-title fade-in" id="faq-title">שאלות נפוצות</h2>
             <div class="glow-divider fade-in"></div>
             <!-- רובוט ליד ה-FAQ -->
-            <img src="images/robot2.png" alt="" class="robot-faq" aria-hidden="true" loading="lazy">
+            <img src="images/Prezentorobot_2.png" alt="" class="robot-faq" aria-hidden="true" loading="lazy">
             <div class="faq-list fade-in" role="list">
                 <div class="faq-item" role="listitem">
                     <button class="faq-question" aria-expanded="false" aria-controls="faq-1">
@@ -1633,14 +1738,15 @@
         </div>
     </section>
 
-    <!-- ===== MAP SECTION ===== -->
+    <!-- ===== MAP SECTION - PATCH #1: Correct embed ===== -->
     <section class="section" id="location" aria-labelledby="map-title">
         <div class="container">
             <h2 class="section-title fade-in" id="map-title">איך מגיעים?</h2>
             <p class="section-subtitle fade-in">אייסמול אילת, קומה תחתונה, ליד רנואר</p>
             <div class="map-wrapper fade-in">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3414.8!2d34.9508!3d29.5557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15007734a3b29b69%3A0x4f7b6c5c9b8e4d2a!2sIce%20Mall%20Eilat!5e0!3m2!1siw!2sil!4v1710000000000!5m2!1siw!2sil" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3470.7019681757297!2d34.968173523929174!3d29.554172441632183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x150071e4755f8789%3A0xf6d0051a1a4bec3e!2z15DXmdeZ16HXnteV15wg15DXmdec16ogLSBJQ0UgTUFMTCBFSUxBVA!5e0!3m2!1siw!2sil!4v1773592398733!5m2!1siw!2sil" 
+                    style="border:0;" 
                     allowfullscreen="" 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade"
@@ -1666,7 +1772,7 @@
                     </button>
                     <div class="legal-content" id="legal-terms-content" role="region">
                         <div class="legal-content-inner">
-                            הטקסט המלא של תקנון המבצע יתווסף בשלב הבא. תקנון זה יכלול את כל תנאי המבצע, הגבלות, זכאות, ותנאי מימוש ההטבה.
+                            <a href="terms.html" target="_blank" rel="noopener noreferrer">לצפייה בתקנון המבצע המלא לחצו כאן</a>
                         </div>
                     </div>
                 </div>
@@ -1677,7 +1783,7 @@
                     </button>
                     <div class="legal-content" id="legal-privacy-content" role="region">
                         <div class="legal-content-inner">
-                            הטקסט המלא של מדיניות הפרטיות יתווסף בשלב הבא. מדיניות זו תפרט כיצד נאסף, נשמר ונעשה שימוש במידע האישי שנמסר בטופס ההרשמה.
+                            <a href="privacy.html" target="_blank" rel="noopener noreferrer">לצפייה במדיניות הפרטיות המלאה לחצו כאן</a>
                         </div>
                     </div>
                 </div>
@@ -1688,7 +1794,7 @@
                     </button>
                     <div class="legal-content" id="legal-accessibility-content" role="region">
                         <div class="legal-content-inner">
-                            הטקסט המלא של הצהרת הנגישות יתווסף בשלב הבא. אתר זה נבנה תוך הקפדה על עמידה בתקני הנגישות הישראליים ובהתאם לתקן WCAG 2.1.
+                            אתר זה נבנה תוך הקפדה על עמידה בתקני הנגישות הישראליים ובהתאם לתקן WCAG 2.1. לשאלות בנושא נגישות ניתן לפנות אלינו.
                         </div>
                     </div>
                 </div>
@@ -1696,11 +1802,15 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- ===== FOOTER - PATCH #7: Links to terms/privacy ===== -->
     <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-brand">ICE PLAY</div>
             <p class="footer-address">אייסמול אילת, קומה תחתונה, ליד רנואר | רח' קאמפן 8, אילת</p>
+            <div class="footer-links">
+                <a href="terms.html" target="_blank" rel="noopener noreferrer">תקנון המבצע</a>
+                <a href="privacy.html" target="_blank" rel="noopener noreferrer">מדיניות הפרטיות</a>
+            </div>
             <p class="footer-copy">&copy; 2026 ICE PLAY. כל הזכויות שמורות.</p>
         </div>
     </footer>
@@ -1712,8 +1822,8 @@
 
         /* ===== CONFIGURATION ===== */
         const CONFIG = {
-            APPS_SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE',
-            RECAPTCHA_SITE_KEY: 'YOUR_RECAPTCHA_SITE_KEY_HERE',
+            /* PATCH #9: Google Apps Script endpoint */
+            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwWtvDX2wVt8F7dgsyTXFAyCNaECAc5Rc7C2EFn2oiJp46Wmmxy637nz0s6E3Nz196zXw/exec',
             MIN_COUNTER_DISPLAY: 150,
             PROMO_END_DATE: new Date('2026-04-30T23:59:00+03:00'),
         };
@@ -2008,7 +2118,7 @@
             return true;
         }
 
-        // Form submission
+        /* ===== FORM SUBMISSION - PATCH #9: Connected to Google Apps Script ===== */
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -2018,7 +2128,7 @@
                 msg.classList.remove('success', 'duplicate', 'error');
             });
 
-            // Validate all fields (without email)
+            // Validate all fields
             const fields = ['childName', 'childId', 'childBirthDate', 'parentName', 'address', 'phone'];
             let isValid = true;
 
@@ -2028,17 +2138,14 @@
                 }
             });
 
-            // Validate checkboxes
-            const checkboxes = ['agreeTerms', 'agreeResident', 'agreePrivacy'];
-            checkboxes.forEach(function(cbId) {
-                const cb = document.getElementById(cbId);
-                if (!cb.checked) {
-                    isValid = false;
-                    cb.closest('.checkbox-label').style.color = 'var(--neon-pink)';
-                } else {
-                    cb.closest('.checkbox-label').style.color = '';
-                }
-            });
+            // Validate checkbox (PATCH #6: single checkbox)
+            const agreeAll = document.getElementById('agreeAll');
+            if (!agreeAll.checked) {
+                isValid = false;
+                agreeAll.closest('.checkbox-label').style.color = 'var(--neon-pink)';
+            } else {
+                agreeAll.closest('.checkbox-label').style.color = '';
+            }
 
             if (!isValid) {
                 const firstError = document.querySelector('.form-input.error, .checkbox-label[style*="pink"]');
@@ -2052,21 +2159,32 @@
             submitBtn.classList.add('loading');
             submitBtn.disabled = true;
 
-            // Prepare form data (without email)
+            // Prepare form data (PATCH #9: fields matching endpoint)
             const formData = {
                 childName: sanitize(document.getElementById('childName').value.trim()),
                 childId: sanitize(document.getElementById('childId').value.trim()),
-                childBirthDate: document.getElementById('childBirthDate').value,
+                birthDate: document.getElementById('childBirthDate').value,
                 parentName: sanitize(document.getElementById('parentName').value.trim()),
                 address: sanitize(document.getElementById('address').value.trim()),
                 phone: sanitize(document.getElementById('phone').value.trim()),
+                termsConsent: true,
+                privacyConsent: true,
                 timestamp: new Date().toISOString()
             };
 
             try {
-                // DEMO MODE: Simulate success
-                await new Promise(function(resolve) { setTimeout(resolve, 1500); });
-                
+                // Send to Google Apps Script
+                const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // With no-cors mode, we can't read the response, so we assume success
+                // Also store locally for duplicate prevention on client side
                 const registeredIds = JSON.parse(localStorage.getItem('iceplay_registered') || '[]');
                 
                 if (registeredIds.includes(formData.childId)) {
