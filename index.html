@@ -84,14 +84,20 @@
             position: relative;
         }
 
-        /* ===== SPACE BACKGROUND - PATCH #11: robobg.webp ===== */
+        /* ===== SPACE BACKGROUND - Responsive ===== */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background: url('images/robobg.webp') center center / cover no-repeat;
+            background: url('images/169BG.jpg') center center / cover no-repeat;
             z-index: -2;
             opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            body::before {
+                background-image: url('images/916BG.jpg');
+            }
         }
 
         body::after {
