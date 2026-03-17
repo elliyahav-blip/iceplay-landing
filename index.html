@@ -926,6 +926,17 @@
             color: var(--neon-purple);
         }
 
+        .checkbox-error-msg {
+            color: #ff4d6a;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 8px 14px;
+            background: rgba(255, 77, 106, 0.12);
+            border: 1px solid rgba(255, 77, 106, 0.3);
+            border-radius: 8px;
+            text-align: right;
+        }
+
         .submit-btn {
             width: 100%;
             padding: 18px;
@@ -1649,6 +1660,11 @@
                             <input type="checkbox" id="agreeAll" name="agreeAll" required aria-required="true">
                             <span>אני מאשר/ת כי קראתי את <a href="terms.html" target="_blank" rel="noopener noreferrer">תקנון המבצע</a> ואת <a href="privacy.html" target="_blank" rel="noopener noreferrer">מדיניות הפרטיות</a>, ואני מסכים/ה למסירת המידע שלי ושל ילדי ולשימוש בו לצורך ניהול המבצע, בדיקת זכאות ומימוש ההטבה, בהתאם להם.</span>
                         </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="childAgeDeclaration" name="childAgeDeclaration" required aria-required="true">
+                            <span>אני מצהיר/ה כי הילד שרשמתי בטופס הינו בין הגילאים 3-16</span>
+                        </label>
+                        <div id="checkboxError" class="checkbox-error-msg" style="display:none;" role="alert">שכחת לסמן את תיבות הסימון מתחת לשדות הטבלה</div>
                     </div>
 
                     <button type="submit" class="submit-btn" id="submitBtn">
@@ -2138,17 +2154,23 @@
                 }
             });
 
-            // Validate checkbox (PATCH #6: single checkbox)
+            // Validate checkboxes - both must be checked
             const agreeAll = document.getElementById('agreeAll');
-            if (!agreeAll.checked) {
+            const childAgeDeclaration = document.getElementById('childAgeDeclaration');
+            const checkboxError = document.getElementById('checkboxError');
+            if (!agreeAll.checked || !childAgeDeclaration.checked) {
                 isValid = false;
-                agreeAll.closest('.checkbox-label').style.color = 'var(--neon-pink)';
+                if (!agreeAll.checked) agreeAll.closest('.checkbox-label').style.color = 'var(--neon-pink)';
+                if (!childAgeDeclaration.checked) childAgeDeclaration.closest('.checkbox-label').style.color = 'var(--neon-pink)';
+                checkboxError.style.display = 'block';
             } else {
                 agreeAll.closest('.checkbox-label').style.color = '';
+                childAgeDeclaration.closest('.checkbox-label').style.color = '';
+                checkboxError.style.display = 'none';
             }
 
             if (!isValid) {
-                const firstError = document.querySelector('.form-input.error, .checkbox-label[style*="pink"]');
+                const firstError = document.querySelector('.form-input.error, .checkbox-label[style*="pink"], .checkbox-error-msg[style*="block"]');
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
