@@ -2267,6 +2267,13 @@
   form.addEventListener('submit', e => {
     e.preventDefault();
     
+    // בדיקת צ'קבוקסים לפני שליחה
+    const agreeAllCb = document.getElementById('agreeAll');
+    const childAgeCb = document.getElementById('childAgeDeclaration');
+    if (!agreeAllCb.checked || !childAgeCb.checked) {
+      return; // הוולידציה הראשית כבר מציגה הודעת שגיאה
+    }
+    
     // מציאת הכפתור ושינוי מצב ל"שולח"
     const submitBtn = document.getElementById('submitBtn');
     const originalText = submitBtn.innerHTML;
