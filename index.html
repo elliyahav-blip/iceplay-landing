@@ -1839,7 +1839,7 @@
         /* ===== CONFIGURATION ===== */
         const CONFIG = {
             /* PATCH #9: Google Apps Script endpoint */
-            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwWtvDX2wVt8F7dgsyTXFAyCNaECAc5Rc7C2EFn2oiJp46Wmmxy637nz0s6E3Nz196zXw/exec',
+            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwAAwoaMANJFDKWOVJ0HufILlcd16Q6pdVUaAkq_QqKCIsjNPj2zIYZFQUYFvcu8HrF2A/exec',
             MIN_COUNTER_DISPLAY: 150,
             PROMO_END_DATE: new Date('2026-04-30T23:59:00+03:00'),
         };
@@ -2260,42 +2260,6 @@
 
     })();
     </script>
-<script>
-  // הכתובת שקיבלת מה-Apps Script
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbwAAwoaMANJFDKWOVJ0HufILlcd16Q6pdVUaAkq_QqKCIsjNPj2zIYZFQUYFvcu8HrF2A/exec';
-  const form = document.getElementById('registrationForm');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    
-    // בדיקת צ'קבוקסים לפני שליחה
-    const agreeAllCb = document.getElementById('agreeAll');
-    const childAgeCb = document.getElementById('childAgeDeclaration');
-    if (!agreeAllCb.checked || !childAgeCb.checked) {
-      return; // הוולידציה הראשית כבר מציגה הודעת שגיאה
-    }
-    
-    // מציאת הכפתור ושינוי מצב ל"שולח"
-    const submitBtn = document.getElementById('submitBtn');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = 'שולח נתונים...';
-    fetch(scriptURL, { 
-      method: 'POST', 
-      body: new FormData(form)
-    })
-    .then(response => {
-      alert('תודה! הפרטים נקלטו בהצלחה.');
-      form.reset(); // מנקה את הטופס
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-    })
-    .catch(error => {
-      console.error('Error!', error.message);
-      alert('אופס! הייתה בעיה בחיבור. נסו שוב.');
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
-    });
-  });
-</script>
+
 </body>
 </html>
