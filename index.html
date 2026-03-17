@@ -2238,5 +2238,35 @@
 
     })();
     </script>
+<script>
+  // הכתובת שקיבלת מה-Apps Script
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwAAwoaMANJFDKWOVJ0HufILlcd16Q6pdVUaAkq_QqKCIsjNPj2zIYZFQUYFvcu8HrF2A/exec';
+  const form = document.getElementById('registrationForm');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    // מציאת הכפתור ושינוי מצב ל"שולח"
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'שולח נתונים...';
+    fetch(scriptURL, { 
+      method: 'POST', 
+      body: new FormData(form)
+    })
+    .then(response => {
+      alert('תודה! הפרטים נקלטו בהצלחה.');
+      form.reset(); // מנקה את הטופס
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    })
+    .catch(error => {
+      console.error('Error!', error.message);
+      alert('אופס! הייתה בעיה בחיבור. נסו שוב.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    });
+  });
+</script>
 </body>
 </html>
