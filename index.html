@@ -2207,24 +2207,28 @@
             const formData = {
                 childName: sanitize(document.getElementById('childName').value.trim()),
                 childId: sanitize(document.getElementById('childId').value.trim()),
-                birthDate: document.getElementById('childBirthDate').value,
+                childBirthDate: document.getElementById('childBirthDate').value,
                 parentName: sanitize(document.getElementById('parentName').value.trim()),
                 address: sanitize(document.getElementById('address').value.trim()),
                 phone: sanitize(document.getElementById('phone').value.trim()),
-                termsConsent: true,
-                privacyConsent: true,
-                timestamp: new Date().toISOString()
+                agreeAll: 'true'
             };
 
             try {
-                // Send to Google Apps Script
+                // Send to Google Apps Script using URLSearchParams for no-cors compatibility
+                const params = new URLSearchParams();
+                params.append('childName', formData.childName);
+                params.append('childId', formData.childId);
+                params.append('childBirthDate', formData.childBirthDate);
+                params.append('parentName', formData.parentName);
+                params.append('address', formData.address);
+                params.append('phone', formData.phone);
+                params.append('agreeAll', formData.agreeAll);
+
                 const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
+                    body: params
                 });
 
                 // With no-cors mode, we can't read the response, so we assume success
