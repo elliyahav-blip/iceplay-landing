@@ -2215,20 +2215,21 @@
             };
 
             try {
-                // Send to Google Apps Script using URLSearchParams for no-cors compatibility
-                const params = new URLSearchParams();
-                params.append('childName', formData.childName);
-                params.append('childId', formData.childId);
-                params.append('childBirthDate', formData.childBirthDate);
-                params.append('parentName', formData.parentName);
-                params.append('address', formData.address);
-                params.append('phone', formData.phone);
-                params.append('agreeAll', formData.agreeAll);
+                // Send to Google Apps Script using FormData for no-cors compatibility
+                const fd = new FormData();
+                fd.append('childName', formData.childName);
+                fd.append('childId', formData.childId);
+                fd.append('childBirthDate', formData.childBirthDate);
+                fd.append('parentName', formData.parentName);
+                fd.append('address', formData.address);
+                fd.append('phone', formData.phone);
+                fd.append('agreeAll', formData.agreeAll);
+                fd.append('childAgeDeclaration', document.getElementById('childAgeDeclaration').checked ? 'true' : 'false');
 
                 const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    body: params
+                    body: fd
                 });
 
                 // With no-cors mode, we can't read the response, so we assume success
