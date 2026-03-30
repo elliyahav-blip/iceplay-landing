@@ -1852,7 +1852,7 @@
         /* ===== CONFIGURATION ===== */
         const CONFIG = {
             /* PATCH #9: Google Apps Script endpoint */
-            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbw3HSQmtm_TgSanZHIUAB1twlgLm_P7fz3ahwjCavSQvc4jNLD6JSHqEm_uneqvOtgB5g/exec',
+            APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyXYma5XMXVnIrJPbfmrePMQ49BJMzNXEXlPY1iywXAzbTqGd4wz0-X4dbpres0E2NjZw/exec',
             MIN_COUNTER_DISPLAY: 150,
             PROMO_END_DATE: new Date('2026-04-01T14:00:00+03:00'),
         };
@@ -2194,38 +2194,44 @@
             submitBtn.classList.add('loading');
             submitBtn.disabled = true;
 
-            try {
-                const plainData = Object.fromEntries(new FormData(form).entries());
+            // Prepare form data (PATCH #9: fields matching endpoint)
+            const formData = {
+                childName: sanitize(document.getElementById('childName').value.trim()),
+                childId: sanitize(document.getElementById('childId').value.trim()),
+                childBirthDate: document.getElementById('childBirthDate').value,
+                parentName: sanitize(document.getElementById('parentName').value.trim()),
+                address: sanitize(document.getElementById('address').value.trim()),
+                phone: sanitize(document.getElementById('phone').value.trim()),
+                agreeAll: 'true'
+            };
 
-                // Sanitize all string values in plainData
-                for (const key in plainData) {
-                    if (typeof plainData[key] === \'string\') {
-                        plainData[key] = sanitize(plainData[key].trim());
-                    }
-                }
-                // Ensure boolean values for checkboxes are correctly set
-                plainData.agreeAll = document.getElementById(\'agreeAll\').checked ? \'true\' : \'false\';
-                plainData.childAgeDeclaration = document.getElementById(\'childAgeDeclaration\').checked ? \'true\' : \'false\';
+            try {
+                // Send to Google Apps Script using FormData for no-cors compatibility
+                const fd = new FormData();
+                fd.append('childName', formData.childName);
+                fd.append('childId', formData.childId);
+                fd.append('childBirthDate', formData.childBirthDate);
+                fd.append('parentName', formData.parentName);
+                fd.append('address', formData.address);
+                fd.append('phone', formData.phone);
+                fd.append('agreeAll', formData.agreeAll);
+                fd.append('childAgeDeclaration', document.getElementById('childAgeDeclaration').checked ? 'true' : 'false');
 
                 const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
-                    method: \'POST\',
-                    mode: \'no-cors\',
-                    cache: \'no-cache\',
-                    headers: {
-                        \'Content-Type\': \'application/json\'
-                    },
-                    body: JSON.stringify(plainData)
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: fd
                 });
 
                 // With no-cors mode, we can't read the response, so we assume success
                 // Also store locally for duplicate prevention on client side
                 const registeredIds = JSON.parse(localStorage.getItem('iceplay_registered') || '[]');
                 
-                if (registeredIds.includes(plainData.childId)) {
+                if (registeredIds.includes(formData.childId)) {
                     document.getElementById('duplicateMessage').style.display = 'block';
                     document.getElementById('duplicateMessage').classList.add('duplicate');
                 } else {
-                    registeredIds.push(plainData.childId);
+                    registeredIds.push(formData.childId);
                     localStorage.setItem('iceplay_registered', JSON.stringify(registeredIds));
                     
                     document.getElementById('successMessage').style.display = 'block';
