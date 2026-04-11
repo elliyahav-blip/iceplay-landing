@@ -2015,7 +2015,7 @@
                 age--;
             }
             
-            return age >= 3 && age <= 16;
+            return age >= 2 && age <= 16;
         }
 
         // Israeli phone validation
@@ -2106,7 +2106,7 @@
                         return false;
                     }
                     if (!validateAge(value)) {
-                        showError(fieldId, 'המבצע מיועד לילדים בגילאי 3–16 בלבד');
+                        showError(fieldId, 'המבצע מיועד לילדים בגילאי 2–16 בלבד');
                         return false;
                     }
                     markSuccess(fieldId);
